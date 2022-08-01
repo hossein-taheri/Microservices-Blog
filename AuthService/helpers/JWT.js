@@ -1,10 +1,10 @@
 const jsonwebtoken = require('jsonwebtoken');
-const JWTStingKey = process.env.JWT_STRING_KEY;
+const JWTStingKey = process.env.JWT_SECRET_KEY;
 
 const JWT = {
     issueAccessToken: (id) => {
         const signOptions = {
-            expiresIn: "5m",
+            expiresIn: "1h",
             algorithm: "HS256",
         };
         const payload = {
@@ -17,23 +17,6 @@ const JWT = {
             token: signedToken,
             expiresIn: signOptions.expiresIn,
         }
-    },
-    verifyAccessToken: (token) => {
-        return new Promise((resolve, reject) => {
-            const verifyOptions = {
-                expiresIn: "5m",
-                algorithm: "HS256",
-            };
-            jsonwebtoken.verify(token, JWTStingKey, verifyOptions, (err, decoded) => {
-                if (err) {
-                    reject(err);
-                }
-                if (decoded.type !== 'AccessToken') {
-                    reject(new Error('Token is not an access token'))
-                }
-                resolve(decoded);
-            });
-        });
     },
     issueRefreshToken: (id) => {
         const signOptions = {

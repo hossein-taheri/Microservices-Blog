@@ -1,4 +1,6 @@
 AuthService/node_modules
-
+PostService/vendor
 
 .idea
+AuthService/.idea
+PostService/.idea

@@ -5,14 +5,27 @@ services:
     restart: always
     environment:
       DB_HOST: mongo_db
-      DB_DATABASE: "auth_service"
+      DB_DBNAME: "auth_service"
       DB_PORT: "27017"
-      PORT: "3000"
-      JWT_STRING_KEY: "mY69VjXlZm8vCrdd"
+      PORT: "80"
+      JWT_SECRET_KEY: "example_secret_key"
     ports:
-      - "3000:3000"
+      - "3000:80"
     links:
       - mongo_db
+  post_service:
+    build: PostService
+    restart: always
+    environment:
+      DB_HOST: my_sql_db
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      DB_DBNAME: "post_service"
+      JWT_SECRET_KEY: "example_secret_key"
+    ports:
+      - "4000:80"
+    links:
+      - my_sql_db
   mongo_db:
     image: mongo
     restart: always
@@ -20,3 +33,12 @@ services:
       - "27017:27017"
     logging:
       driver: none
+  my_sql_db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_DATABASE: post_service
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - "3308:3306"
