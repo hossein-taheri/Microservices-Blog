@@ -12,11 +12,11 @@ class UserRepository {
         $statement->execute();
         return $statement->fetchAll()[0];
     }
-    public static function findOneByMongoId($mongo_user_id){
+    public static function findOneByMongoId($object_id){
         $pdo = $GLOBALS['pdo'];
-        $query = "SELECT * FROM `users` WHERE mongo_id=:mongo_user_id";
+        $query = "SELECT * FROM `users` WHERE object_id=:object_id";
         $statement = $pdo->prepare($query);
-        $statement->bindParam(":mongo_user_id", $mongo_user_id);
+        $statement->bindParam(":object_id", $object_id);
         $statement->execute();
         return $statement->fetchAll()[0];
     }

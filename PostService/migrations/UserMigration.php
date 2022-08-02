@@ -10,7 +10,7 @@ class UserMigration
         $pdo->query("
             CREATE TABLE IF NOT EXISTS `users`(
                 `id` INT PRIMARY KEY AUTO_INCREMENT,
-                `mongo_id` VARCHAR(25) NOT NULL,     
+                `object_id` VARCHAR(25) NOT NULL,     
                 `first_name` VARCHAR(250) NOT NULL,     
                 `last_name` VARCHAR(250) NOT NULL
             );

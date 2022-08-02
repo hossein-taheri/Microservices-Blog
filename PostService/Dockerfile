@@ -1,16 +1,24 @@
 #Base Image
-FROM php:7.3-apache
+FROM php:7.4-cli
+
+WORKDIR /usr/app
 
 #Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 RUN php composer-setup.php --install-dir=. --filename=composer
 RUN mv composer /usr/local/bin/
 
+COPY ./composer.json .
+COPY ./composer.lock .
 
-WORKDIR /var/www/html
+RUN apt-get update && apt-get install -y \
+    zlib1g-dev \
+    libzip-dev \
+    unzip
+RUN docker-php-ext-install zip mysqli pdo pdo_mysql
 
-RUN docker-php-ext-install mysqli pdo pdo_mysql
+RUN composer install
 
 COPY . .
 
-EXPOSE 80
+CMD [ "sh","-c", "php manage.php migrate && php -S 0.0.0.0:4000 index.php" ]

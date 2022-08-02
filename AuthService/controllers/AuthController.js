@@ -15,7 +15,7 @@ const AuthController = {
                             email: req.body.email
                         },
                         {
-                            user_name: req.body.email
+                            user_name: req.body.user_name
                         }
                     ]
                 })
@@ -23,7 +23,10 @@ const AuthController = {
 
             if (user && (user.email.toString() === req.body.email.toString())) {
                 throw new NotAcceptable("The entered email already has selected");
+            } else if (user) {
+                throw new NotAcceptable("The entered username already has selected");
             }
+
 
             if (!req.body.password) {
                 throw new InternalServerErrors("The entered password is not correct")
