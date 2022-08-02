@@ -1,6 +1,8 @@
 AuthService/node_modules
 PostService/vendor
+CommentService/vendor
 
 .idea
 AuthService/.idea
 PostService/.idea
+CommentService/.idea

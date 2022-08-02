@@ -27,7 +27,7 @@ class PostShowMiddleware implements IMiddleware
 }
 
 
-class PostStoreMiddleware implements IMiddleware
+class PostCreateMiddleware implements IMiddleware
 {
     public function handle(Request $request): void
     {

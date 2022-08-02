@@ -26,6 +26,19 @@ services:
       - "4000:4000"
     links:
       - mysql_db
+  comment_service:
+    build: CommentService
+    restart: always
+    environment:
+      DB_HOST: mysql_db
+      DB_USERNAME: root
+      DB_PASSWORD: password
+      DB_DBNAME: "comment_service"
+      JWT_SECRET_KEY: "example_secret_key"
+    ports:
+      - "5000:5000"
+    links:
+      - mysql_db
   mongo_db:
     image: mongo
     restart: always

@@ -49,7 +49,7 @@ class PostController
 
     public function create()
     {
-        $user = UserRepository::findOneByMongoId($_POST['user_id']);
+        $user = UserRepository::findOneByObjectId($_POST['user_id']);
 
         if (!$user) {
             throw new NotFoundException("User not found");

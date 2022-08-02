@@ -6,7 +6,7 @@ use Middleware\JWTAuthMiddleware;
 use Pecee\SimpleRouter\SimpleRouter;
 use Middleware\PostIndexMiddleware;
 use Middleware\PostShowMiddleware;
-use Middleware\PostStoreMiddleware;
+use Middleware\PostCreateMiddleware;
 
 
 SimpleRouter::group(['prefix' => '/post', 'middleware' => [JWTAuthMiddleware::class]], function () {
@@ -15,6 +15,6 @@ SimpleRouter::group(['prefix' => '/post', 'middleware' => [JWTAuthMiddleware::cl
 
     SimpleRouter::get('/{id}', 'PostController@show', ['middleware' => [PostShowMiddleware::class]])->setName('user.show');
 
-    SimpleRouter::post('/', 'PostController@create', ['middleware' => [PostStoreMiddleware::class]])->setName('user.create');
+    SimpleRouter::post('/', 'PostController@create', ['middleware' => [PostCreateMiddleware::class]])->setName('user.create');
 
 });
