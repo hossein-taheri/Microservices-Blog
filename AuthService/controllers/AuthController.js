@@ -4,6 +4,7 @@ const JWT = require("../helpers/JWT");
 const Password = require("../helpers/Password");
 const {InternalServerErrors} = require("../helpers/CustomErrors");
 const {NotAcceptable} = require("../helpers/CustomErrors");
+const MessageBroker = require("../helpers/MessageBroker");
 
 const AuthController = {
     register: async (req, res, next) => {
@@ -45,7 +46,18 @@ const AuthController = {
                     register_at: Date.now(),
                 });
 
-            await user.save()
+            user = await user.save()
+
+            MessageBroker.sendMessageToQueue(
+                'post.created',
+                {
+                    id: user.id,
+                    first_name: user.first_name,
+                    last_name: user.last_name,
+                    user_name: user.user_name,
+                    email: user.email,
+                }
+            );
 
             return ApiResponse
                 .message(
