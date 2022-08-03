@@ -15,10 +15,10 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libzip-dev \
     unzip
-RUN docker-php-ext-install zip mysqli pdo pdo_mysql
+RUN docker-php-ext-install zip mysqli pdo pdo_mysql sockets
 
 RUN composer install
 
 COPY . .
 
-CMD [ "sh","-c", "php manage.php migrate && php -S 0.0.0.0:4000 index.php" ]
+CMD [ "sh","-c", "php message_broker_listening.php & php manage.php migrate && php -S 0.0.0.0:4000 index.php" ]

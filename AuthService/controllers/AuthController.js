@@ -49,7 +49,7 @@ const AuthController = {
             user = await user.save()
 
             MessageBroker.sendMessageToQueue(
-                'post.created',
+                'user.created',
                 {
                     id: user.id,
                     first_name: user.first_name,

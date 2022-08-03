@@ -2,6 +2,7 @@
 
 function migrate()
 {
+    sleep(5);
     $migrations = json_decode(file_get_contents("./manage-project/migration_files_list.json"), true);
     foreach ($migrations as $migration) {
         try {
