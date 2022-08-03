@@ -13,11 +13,6 @@ class UserRepository {
         return $statement->fetchAll()[0];
     }
     public static function create($object_id,$first_name,$last_name){
-        echo json_encode([
-            $object_id,
-            $first_name,
-            $last_name
-        ]);
         $pdo = $GLOBALS['pdo'];
         $query = "
             INSERT INTO `users`(

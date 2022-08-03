@@ -42,7 +42,9 @@ function createUsers()
         "post_service.users",
         $callback
     );
-
+    RabbitMQ::closeConnection(
+        $connection
+    );
 }
 
 
