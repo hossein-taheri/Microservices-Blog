@@ -3,19 +3,20 @@ require 'vendor/autoload.php';
 require 'manage-project/config.php';
 require 'bootstrap/config.php';
 require 'bootstrap/database.php';
+require 'helpers/PDOHelper.php';
 require 'helpers/RabbitMQ.php';
-require 'repositories/UserRepository.php';
+require 'repositories/PostRepository.php';
 
-use Repository\UserRepository;
+use Repository\PostRepository;
 
 
-function createUsers()
+function createPosts()
 {
     error_log("Listening to RabbitMQ ...");
 
     $callback = function ($msg) {
         $msg->body = json_decode($msg->body);
-        UserRepository::create($msg->body->id, $msg->body->first_name, $msg->body->last_name);
+        PostRepository::create($msg->body->id);
     };
 
     $connection = RabbitMQ::createConnection(
@@ -34,12 +35,12 @@ function createUsers()
     RabbitMQ::declareQueueAndBindToChannel(
         $channel,
         "blog",
-        "comment_service.users",
-        "user.created"
+        "comment_service.posts",
+        "post.created"
     );
     RabbitMQ::consumingMessagesFromQueue(
         $channel,
-        "comment_service.users",
+        "comment_service.posts",
         $callback
     );
     RabbitMQ::closeConnection(
@@ -50,4 +51,4 @@ function createUsers()
 
 
 sleep(10);
-createUsers();
+createPosts();

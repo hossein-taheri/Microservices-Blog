@@ -21,4 +21,4 @@ RUN composer install
 
 COPY . .
 
-CMD [ "sh","-c", "php message_broker_listening/users.php & php manage.php migrate && php -S 0.0.0.0:5000 index.php" ]
+CMD [ "sh","-c", "php message_broker_listening/users.php & php message_broker_listening/posts.php & php manage.php migrate && php -S 0.0.0.0:5000 index.php" ]

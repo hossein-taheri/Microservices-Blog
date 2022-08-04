@@ -38,6 +38,15 @@ class PostRepository
         return $statement->fetchAll();
     }
 
+    public static function findLastInserted()
+    {
+        $pdo = $GLOBALS['pdo'];
+        $query = "SELECT * FROM `posts` WHERE `id` = LAST_INSERT_ID();";
+        $statement = $pdo->prepare($query);
+        PDOHelper::execute($statement);
+        return $statement->fetchAll()[0];
+    }
+
     public static function create($title, $short_description, $description, $user_id)
     {
         $pdo = $GLOBALS['pdo'];

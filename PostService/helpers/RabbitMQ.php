@@ -1,6 +1,7 @@
 <?php
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;
 
 
 class RabbitMQ
@@ -40,6 +41,42 @@ class RabbitMQ
     public static function closeConnection($connection)
     {
         $connection->close();
+    }
+
+    public static function producingMessage(
+        $host,
+        $port,
+        $username,
+        $password,
+        $exchange_name,
+        $type,
+        $routing_key,
+        $data
+    )
+    {
+        $connection = self::createConnection(
+            $host,
+            $port,
+            $username,
+            $password
+        );
+
+        $channel = self::createChannel($connection);
+
+        self::declareExchange(
+            $channel,
+            $exchange_name,
+            $type
+        );
+
+        $channel->basic_publish(
+            new AMQPMessage($data),
+            $exchange_name,
+            $routing_key
+        );
+
+
+        self::closeConnection($connection);
     }
 }
 
