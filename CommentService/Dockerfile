@@ -1,24 +1,11 @@
-#Base Image
-FROM php:7.4-cli
+FROM node:16
 
-WORKDIR /usr/app
+WORKDIR /usr/app/
 
-#Install Composer
-RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-RUN php composer-setup.php --install-dir=. --filename=composer
-RUN mv composer /usr/local/bin/
+COPY ./package*.json ./
 
-COPY ./composer.json .
-COPY ./composer.lock .
-
-RUN apt-get update && apt-get install -y \
-    zlib1g-dev \
-    libzip-dev \
-    unzip
-RUN docker-php-ext-install zip mysqli pdo pdo_mysql sockets
-
-RUN composer install
+RUN npm install
 
 COPY . .
 
-CMD [ "sh","-c", "php message_broker_listening/users.php & php message_broker_listening/posts.php & php manage.php migrate && php -S 0.0.0.0:5000 index.php" ]
+CMD [ "node" , "index.js" ]
