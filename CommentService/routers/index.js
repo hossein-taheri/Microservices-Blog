@@ -5,7 +5,7 @@ const JWTAuth = require('../middleware/JWTAuth')
 
 router.use(JWTAuth.check)
 
-router.use('/post/:post_id/comment/', comment);
+router.use('/post/', comment);
 
 
 module.exports = router;

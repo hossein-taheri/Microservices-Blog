@@ -5,10 +5,7 @@ let mongooseHidden = require('mongoose-hidden')()
 const PostSchema = new mongoose.Schema(
     {
         _id: {
-            type: Number,
-            required: true,
-            unique: true,
-            index: true,
+            type: String,
         }
     },
     {timestamps: true},

@@ -12,33 +12,40 @@ const CommentController = {
                     id: req.user_id,
                 })
 
-            if (!user){
+            if (!user) {
                 throw new NotAcceptable("User not found");
             }
 
             let post = await Post
                 .findOne({
-                    id: req.params.post_id,
+                    _id: req.params.post_id,
                 })
+            console.log({
+                params: req.params,
+                post_id: req.params.post_id,
+                post,
+            })
 
-            if (!post){
-                throw new NotAcceptable("User not found");
+            if (!post) {
+                throw new NotAcceptable("Post not found");
             }
+
+
 
             const comment = await (
                 new Comment(
-                {
-                    body: req.body.body,
-                    user_id: req.body.user_id,
-                    post_id: req.params.post_id,
-                })
+                    {
+                        body: req.body.body,
+                        user_id: req.user_id,
+                        post_id: req.params.post_id,
+                    })
             ).save();
 
             return ApiResponse
                 .message(
                     req,
                     res,
-                    "Account registered successfully",
+                    "Comment created successfully",
                     comment
                 );
         } catch (err) {
