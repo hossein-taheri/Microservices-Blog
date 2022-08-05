@@ -26,13 +26,12 @@ const CommentController = {
             }
 
 
-
             const comment = await (
                 new Comment(
                     {
                         body: req.body.body,
-                        user_id: req.user_id,
-                        post_id: req.params.post_id,
+                        user: req.user_id,
+                        post: req.params.post_id,
                     })
             ).save();
 
