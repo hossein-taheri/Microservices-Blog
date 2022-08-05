@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package PostComment;
+
+message Post {
+  int32 id = 1;
+}
+
+message Comment {
+  int32 id = 1;
+  string firstName = 2;
+  string lastName = 3;
+  string body = 4;
+}
+
+message Comments {
+  repeated Comment comments = 1;
+}
+
+service CommentService  {
+  rpc GetComments(Post) returns (Comments) {}
+}

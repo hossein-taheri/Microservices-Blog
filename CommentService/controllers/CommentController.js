@@ -20,11 +20,6 @@ const CommentController = {
                 .findOne({
                     _id: req.params.post_id,
                 })
-            console.log({
-                params: req.params,
-                post_id: req.params.post_id,
-                post,
-            })
 
             if (!post) {
                 throw new NotAcceptable("Post not found");

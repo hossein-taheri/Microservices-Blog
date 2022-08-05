@@ -19,5 +19,8 @@ require('./bootstrap/error_handler')(app);
 //listening config
 require('./bootstrap/listening')(app);
 
+//listening config
+require('./bootstrap/grpc_listening')();
+
 //message broker listening config
 require('./bootstrap/message_broker');
