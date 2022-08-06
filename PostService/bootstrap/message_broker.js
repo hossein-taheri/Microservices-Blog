@@ -1,2 +1,2 @@
-// Rabbit MQ Consumer Service to
+// Rabbit MQ Consumer-Producer Service
 require("../RabbitMQ/index");

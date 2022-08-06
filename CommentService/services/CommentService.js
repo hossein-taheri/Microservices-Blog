@@ -1,16 +1,15 @@
+const User = require("../models/User");
+const Post = require("../models/Post");
 const Comment = require("../models/Comment");
+const {NotAcceptable} = require("../helpers/CustomErrors");
+
 
 const CommentService = {
-    getAllCommentsByPostId: async (post_id) => {
-
+    findByPostId: async (post_id) => {
         let comments = await Comment
             .find(
                 {
                     post_id
-                },
-                {},
-                {
-                    new: true
                 }
             )
             .populate({
@@ -28,8 +27,8 @@ const CommentService = {
                 id: comment.id,
                 body: comment.body,
                 user: {
-                    firstName: comment.user.first_name,
-                    lastName: comment.user.last_name
+                    first_name: comment.user.first_name,
+                    last_name: comment.user.last_name
                 },
             })
         })
@@ -37,6 +36,35 @@ const CommentService = {
         return {
             comments: result
         }
+    },
+    create: async (user_id, post_id, body) => {
+        const user = await User
+            .findOne({
+                _id: user_id,
+            })
+
+        if (!user) {
+            throw new NotAcceptable("User not found");
+        }
+
+        let post = await Post
+            .findOne({
+                _id: post_id,
+            })
+
+        if (!post) {
+            throw new NotAcceptable("Post not found");
+        }
+
+        let comment = new Comment(
+            {
+                body: body,
+                user: user_id,
+                post: post_id,
+            });
+        comment = comment.save();
+
+        return comment;
     }
 }
 

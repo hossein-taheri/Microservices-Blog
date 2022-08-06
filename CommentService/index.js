@@ -20,7 +20,7 @@ require('./bootstrap/error_handler')(app);
 require('./bootstrap/listening')(app);
 
 //listening config
-require('./bootstrap/grpc_listening')();
+require('./bootstrap/grpc_listening');
 
 //message broker listening config
 require('./bootstrap/message_broker');

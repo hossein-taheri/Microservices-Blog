@@ -1,39 +1,14 @@
-const User = require("../models/User");
-const Post = require("../models/Post");
-const Comment = require("../models/Comment");
 const ApiResponse = require("../helpers/responses/ApiResponse");
-const {NotAcceptable} = require("../helpers/CustomErrors");
+const CommentService = require("../services/CommentService");
 
 const CommentController = {
     create: async (req, res, next) => {
         try {
-            const user = await User
-                .findOne({
-                    _id: req.user_id,
-                })
-
-            if (!user) {
-                throw new NotAcceptable("User not found");
-            }
-
-            let post = await Post
-                .findOne({
-                    _id: req.params.post_id,
-                })
-
-            if (!post) {
-                throw new NotAcceptable("Post not found");
-            }
-
-
-            const comment = await (
-                new Comment(
-                    {
-                        body: req.body.body,
-                        user: user.id,
-                        post: post.id,
-                    })
-            ).save();
+            const comment = await CommentService.create(
+                req.user_id,
+                req.params.post_id,
+                req.body.body,
+            );
 
             return ApiResponse
                 .message(

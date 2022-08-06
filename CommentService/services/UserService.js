@@ -1,5 +1,5 @@
-const User = require('../models/User')
-const UserController = {
+const User = require("../models/User");
+const UserService = {
     async create(id, first_name, last_name) {
         const user = await (new User({
             _id: id,
@@ -9,4 +9,4 @@ const UserController = {
     }
 }
 
-module.exports = UserController;
+module.exports = UserService;
