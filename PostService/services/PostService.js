@@ -1,7 +1,7 @@
 const Post = require("../models/Post");
 const {NotFound} = require("../helpers/CustomErrors");
-const MessageBroker = require("../helpers/MessageBroker");
 const {getComments} = require("../gRPC/service/gRPCService");
+const RabbitMQ = require("../RabbitMQ/index");
 
 const PostService = {
     async index(page = 1) {
@@ -55,7 +55,7 @@ const PostService = {
             })
         ).save()
 
-        MessageBroker.sendMessageToQueue("post.created", {
+        RabbitMQ.sendMessageToQueue("post.created", {
             id: post.id,
             title: post.title,
             description: post.description

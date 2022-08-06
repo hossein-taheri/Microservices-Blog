@@ -3,11 +3,10 @@ const PostService = require("../services/PostService");
 const PostController = {
     async index(req, res, next) {
         try {
-            const page = req.query.page;
+            const posts = await PostService.index(
+                req.query.page
+            );
 
-            const posts = await PostService.index(page);
-
-            console.log(posts)
 
             return ApiResponse.message(
                 req,
