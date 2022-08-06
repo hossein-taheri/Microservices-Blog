@@ -9,7 +9,7 @@ const CommentController = {
         try {
             const user = await User
                 .findOne({
-                    id: req.user_id,
+                    _id: req.user_id,
                 })
 
             if (!user) {
@@ -30,8 +30,8 @@ const CommentController = {
                 new Comment(
                     {
                         body: req.body.body,
-                        user: req.user_id,
-                        post: req.params.post_id,
+                        user: user.id,
+                        post: post.id,
                     })
             ).save();
 
