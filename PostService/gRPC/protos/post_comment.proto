@@ -3,10 +3,10 @@ syntax = "proto3";
 package PostComment;
 
 message Post {
-  int32 id = 1;
+  string id = 1;
 }
 
-message User{
+message User {
   string first_name = 1;
   string last_name = 2;
 }
@@ -21,6 +21,6 @@ message Comments {
   repeated Comment comments = 1;
 }
 
-service CommentService  {
+service CommentService {
   rpc GetComments(Post) returns (Comments) {}
 }

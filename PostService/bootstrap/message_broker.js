@@ -5,8 +5,6 @@ const port = process.env.RABBIT_MQ_PORT || 5672;
 const exchange_name = "blog"
 const user_queue_name = "post_service_user"
 
-const MessageBroker = {}
-
 amqp.connect(`amqp://${host}:${port}`, (connection_err, connection) => {
     if (connection_err) {
         process.exit(-1);
@@ -50,5 +48,3 @@ amqp.connect(`amqp://${host}:${port}`, (connection_err, connection) => {
     });
 
 });
-
-module.exports = MessageBroker

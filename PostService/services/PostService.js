@@ -1,6 +1,8 @@
 const Post = require("../models/Post");
 const {NotFound} = require("../helpers/CustomErrors");
 const MessageBroker = require("../helpers/MessageBroker");
+const {getComments} = require("../gRPC/service/gRPCService");
+
 const PostService = {
     async index(page = 1) {
         const per_page = 10;
@@ -35,7 +37,12 @@ const PostService = {
             throw new NotFound("Post not found");
         }
 
-        return post;
+        const {comments} = await getComments("62edb1ca1a30f54d536a0093");
+
+        return {
+            post,
+            comments
+        };
     },
     async create(user_id, title, description) {
         const short_description = description.substring(0, 50);
