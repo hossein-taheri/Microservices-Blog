@@ -3,13 +3,6 @@ services:
   auth_service:
     build: AuthService
     restart: always
-    environment:
-      DB_HOST: mongo_db
-      DB_PORT: "27017"
-      DB_DBNAME: "auth_service"
-      JWT_SECRET_KEY: "example_secret_key"
-      RABBIT_MQ_HOST: "rabbitmq"
-      PORT: "80"
     ports:
       - "3000:80"
     links:
@@ -17,15 +10,6 @@ services:
   post_service:
     build: PostService
     restart: always
-    environment:
-      DB_HOST: mongo_db
-      DB_PORT: "27017"
-      DB_DBNAME: "post_service"
-      JWT_SECRET_KEY: "example_secret_key"
-      RABBIT_MQ_HOST: "rabbitmq"
-      PORT: "80"
-      GRPC_HOST: "comment_service"
-      GRPC_PORT: "9090"
     ports:
       - "4000:80"
     links:
@@ -33,14 +17,6 @@ services:
   comment_service:
     build: CommentService
     restart: always
-    environment:
-      DB_HOST: mongo_db
-      DB_PORT: "27017"
-      DB_DBNAME: "comment_service"
-      JWT_SECRET_KEY: "example_secret_key"
-      RABBIT_MQ_HOST: "rabbitmq"
-      PORT: "80"
-      GRPC_PORT: "9090"
     ports:
       - "5000:80"
       - "9090:9090"
